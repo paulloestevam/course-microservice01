@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysqlservice-warehouse
+spec:
+  ports:
+  - port: 3306
+  selector:
+    app: mysql-warehouse
+  clusterIP: None
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-warehouse
+spec:
+  selector:
+    matchLabels:
+      app: mysql-warehouse
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: mysql-warehouse
+    spec:
+      containers:
+      - image: mysql:5.6
+        name: mysql-warehouse
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: password
+        - name: MYSQL_DATABASE
+          value: "myDB-warehouse"
+        ports:
+        - containerPort: 3306
+          name: mysql
+        volumeMounts:
+        - name: mysql-persistent-storage
+          mountPath: /var/lib/mysql
+      volumes:
+      - name: mysql-persistent-storage
+        persistentVolumeClaim:
+          claimName: mysql-persistent-volume-claim

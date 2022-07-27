@@ -1,0 +1,19 @@
+server:
+  port: 8091
+
+spring:
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://mysqlservice-warehouse:3306/myDB-warehouse?createDatabaseIfNotExist=true
+#    url: jdbc:mysql://localhost:3306/myDB-warehouse?createDatabaseIfNotExist=true
+    username: root
+    password: password
+  jpa:
+    hibernate.ddl-auto: create
+    generate-ddl: false
+    show-sql: true
+    initialize: true
+    defer-datasource-initialization: true
+  sql:
+    init:
+      mode: always

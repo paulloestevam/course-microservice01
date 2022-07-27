@@ -1,0 +1,45 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: warehouse
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: warehouse
+  template:
+    metadata:
+      labels:
+        app: warehouse
+    spec:
+      containers:
+        - name: warehouse
+          image: localhost:5000/warehouse
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8091
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8091
+            initialDelaySeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8091
+            initialDelaySeconds: 5
+      restartPolicy: Always
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: warehouse
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 8091
+      targetPort: 8091
+      protocol: TCP
+  #      nodePort: 31000
+  selector:
+    app: warehouse
