@@ -7,9 +7,13 @@ B) - Starting a kubernetes and running the four microservices and mysql in pods.
 
 
 https://youtu.be/OACNzZIeCYg The source code
+
 https://youtu.be/q6VpKagFQqY Running Microservices locally with mysql docker
+
 https://youtu.be/dI4YBjd-pOc Testing the Kubernetes k8s load balancer
+
 https://youtu.be/on5iLimdpsE Installing docker kubernetes and deploying spring boot pods services mysql
+
 
 
 ## A) - Running locally with containerized mysql.
