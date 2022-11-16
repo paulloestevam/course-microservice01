@@ -44,10 +44,12 @@ https://youtu.be/ULaI4RcBYSk
 - reiniciar microservicio "order-processor"
 
 - probar endpoint POST con postman url: http://localhost:8090/api/v1/orderprocessor/orderFullfillment con body RAW  con tipo JSON:
-```{
+```
+{
     "customerId": "8474",
     "productId": "450"
-}```
+}
+```
 
 
 ## alternativa: ejecutar uno de los microservicios como un contenedor
@@ -55,18 +57,22 @@ https://youtu.be/ULaI4RcBYSk
 - parar microservicio "payment"
 - abrir terminal y ejecutar los comandos:
 
-	```cd C:\Users\paull\course-microservice01\payment\
+	```
+	cd C:\Users\paull\course-microservice01\payment\
 	./gradlew clean
 	./gradlew build
 	docker build -t payment .   
-	docker run -p 8092:8092 payment:latest```
+	docker run -p 8092:8092 payment:latest
+	```
 
 - probar endpoint GET con postman url:  http://localhost:8092/api/v1/payment
 - probar endpoint POST con postman url: http://localhost:8090/api/v1/orderprocessor/orderFullfillment con body RAW  con tipo JSON:
-```{
+```
+{
     "customerId": "8474",
     "productId": "450"
-}```
+}
+```
 
 
 
@@ -79,7 +85,8 @@ https://youtu.be/ULaI4RcBYSk
 - habilitar Kubernetes en Docker Desktop (Options -> Kubernetes -> Enable Kubernetes)
 - descargar microservicios con:  git clone https://github.com/paulloestevam/course-microservice01.git
 - ejecutar los comandos:
-	```docker run -d -p 5000:5000 --restart=always --name registry registry:2
+	```
+	docker run -d -p 5000:5000 --restart=always --name registry registry:2
 
 	cd C:\Users\paull\course-microservice01\payment\
 	kubectl delete deployment,svc payment
@@ -124,17 +131,20 @@ https://youtu.be/ULaI4RcBYSk
 	kubectl apply -f C:\Users\paull\course-microservice01\warehouse\deployment.yml
 
 	kubectl get deploy,pods,svc
-	cd```
+	cd
+	```
 
 - probar endpoint GET con postman url:  http://localhost:8093/api/v1/loyalty 
 - probar endpoint GET con postman url:  http://localhost:8092/api/v1/payment
 - probar endpoint GET con postman url:  http://localhost:8090/api/v1/orderprocessor
 - probar endpoint GET con postman url:  http://localhost:8091/api/v1/warehouse
 - probar endpoint POST con postman url: http://localhost:8090/api/v1/orderprocessor/orderFullfillment con body RAW  con tipo JSON:
-```{
+```
+{
     "customerId": "8474",
     "productId": "450"
-}```
+}
+```
 
 
 ## probando el Load Balancer del kubernetes
@@ -143,7 +153,9 @@ https://youtu.be/ULaI4RcBYSk
 - Para ver los logs de los pods abrir el Contenedor en Docker Desktop, o a traves del plugin Docker instalado en Intellij,  o a traves del comando "kubectl logs nombre_del_pod", para obtener el nombre del pod ejecute el comando "kubectl get deploy,pods,svc".
 
 - Aumentar la cantidad de pods del microservicio order-processor con el comando 
-```kubectl scale deployment order-processor --replicas=3```
+```
+kubectl scale deployment order-processor --replicas=3
+```
 
 
 
