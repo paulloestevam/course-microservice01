@@ -162,129 +162,31 @@ kubectl scale deployment order-processor --replicas=3
 
 
 
+## Apps y instalación (W11)
 
 
+Instalar Postman         https://www.postman.com/downloads/
+Instalar IntelliJ        https://www.jetbrains.com/idea/download/#section=windows
+Instalar Docker Desktop  https://www.docker.com/products/docker-desktop/
+Instalar git             https://git-scm.com/downloads
+Instalar DBeaver         https://dbeaver.io/download/
+Instalar JDK 17          https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html
 
 
-
-## versión anterior
-
-
-https://youtu.be/OACNzZIeCYg The source code
-
-https://youtu.be/q6VpKagFQqY Running Microservices locally with mysql docker
-
-https://youtu.be/dI4YBjd-pOc Testing the Kubernetes k8s load balancer
-
-https://youtu.be/on5iLimdpsE Installing docker kubernetes and deploying spring boot pods services mysql
-
-
-
-## A) - Running locally with containerized mysql.
-
-Install Docker Desktop https://www.docker.com/products/docker-desktop/.  Then, activate Kubernetes on Options Screen.
-
-```bash
-cd order-processor\
-./gradlew clean
-./gradlew build
-docker build -t order-processor .   
-docker run -p 8090:8090 order-processor:latest
-
-
-
-docker network create springboot-mysql-net
-
-docker run -p 3306:3306 --name mysqlContainer -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=myDB-warehouse -d mysql:5.7
-docker run --name mysqlContainer --network springboot-mysql-net -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=myDB-warehouse -d mysql:5.7
-
-cd warehouse\
-./gradlew clean
-./gradlew build
-docker build -t warehouse .   
-docker run -p 8091:8091 warehouse:latest
-
-cd payment\
-./gradlew clean
-./gradlew build
-docker build -t payment .   
-docker run -p 8092:8092 payment:latest
-
-cd loyalty\
-./gradlew clean
-./gradlew build
-docker build -t loyalty .   
-docker run -p 8093:8093 loyalty:latest
-
+--------------------  Instalación Docker ---------------------------------------------------------
 ```
-
-
-
-
-
-## B) - Starting a kubernetes and running the four microservices and mysql in pods.
-
-Install Docker Desktop https://www.docker.com/products/docker-desktop/.  Then, activate Kubernetes on Options Screen.
-
-```bash
-docker run -d -p 5000:5000 --restart=always --name registry registry:2
-
-
-
-cd payment\
-kubectl delete deployment,svc payment
-./gradlew clean
-./gradlew build
-docker build -t payment .
-docker tag payment localhost:5000/payment
-docker push localhost:5000/payment
-kubectl apply -f payment\deployment.yml
-
-
-
-cd loyalty\
-kubectl delete deployment,svc loyalty
-./gradlew clean
-./gradlew build
-docker build -t loyalty .
-docker tag loyalty localhost:5000/loyalty
-docker push localhost:5000/loyalty
-kubectl apply -f loyalty\deployment.yml
-
-
-cd order-processor\
-kubectl delete deployment,svc order-processor
-./gradlew clean
-./gradlew build
-docker build -t order-processor .
-docker tag order-processor localhost:5000/order-processor
-docker push localhost:5000/order-processor
-kubectl apply -f order-processor\deployment.yml
-
-
-cd warehouse\
-kubectl delete deployment,svc warehouse
-kubectl delete deployment mysql-warehouse 
-kubectl delete service mysqlservice-warehouse
-kubectl delete deployment,svc mysql-warehouse
-kubectl delete service mysqlservice-warehouse
-kubectl apply -f mysql-pv.yaml
-kubectl apply -f mysql-deployment.yaml
-./gradlew clean
-./gradlew build
-docker build -t warehouse .
-docker tag warehouse localhost:5000/warehouse
-docker push localhost:5000/warehouse
-kubectl apply -f warehouse\deployment.yml
-
-
-
-clear 
-kubectl get deploy,pods,svc
-
-
-
+dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
+dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
 ```
+restart SO
+Install wsl_update_x64.msi    (https://learn.microsoft.com/pt-br/windows/wsl/install-manual#step-4---download-the-linux-kernel-update-package)
+```
+wsl --set-default-version 2
+```
+Install Docker Desktop     (conf https://docs.docker.com/desktop/install/windows-install/)
+
+
+
 
 
 
